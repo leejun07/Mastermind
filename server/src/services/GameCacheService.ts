@@ -4,8 +4,9 @@ import { GameCache } from '../types/types';
 export class GameCacheService {
   currentGameCache: GameCache = initialGameData;
 
-  initializeGameCache(solution: string): GameCache {
+  initializeGameCache(solution: string, difficultyLevel: string): GameCache {
     this.currentGameCache = {
+      difficultyLevel,
       solution: solution,
       currentGuessCount: 10,
       guessHistory: [],

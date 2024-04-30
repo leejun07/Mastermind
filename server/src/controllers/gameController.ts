@@ -9,9 +9,12 @@ const gameController: any = {};
 
 gameController.startGame = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { solution } = await gameManagementService.getInitialGameData();
-    const test = gameCache.initializeGameCache(solution);
-    res.locals.gameCache = test;
+    const { difficultyLevel } = req.body;
+    const { solution, solutionLength } = await gameManagementService.getInitialGameData(
+      difficultyLevel
+    );
+    const newGameCache = gameCache.initializeGameCache(solution, difficultyLevel);
+    res.locals.gameCache = newGameCache;
     return next();
   } catch (error) {
     console.log(error);
@@ -20,9 +23,8 @@ gameController.startGame = async (req: Request, res: Response, next: NextFunctio
 
 gameController.playGame = (req: Request, res: Response, next: NextFunction) => {
   const { guess } = req.body;
-  const { solution } = gameCache.currentGameCache;
+  const { solution, difficultyLevel } = gameCache.currentGameCache;
   try {
-    validateGuess(guess);
     const feedback = gameManagementService.getFeedback(guess, solution);
     gameCache.updateGameCache(guess, feedback.response);
 

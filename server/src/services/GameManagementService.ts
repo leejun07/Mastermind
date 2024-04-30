@@ -1,9 +1,11 @@
 import { fetchRandomNumbers } from '../utils/fetchRandomNumbers';
+import { getSolutionLength } from '../utils/getSolutionLength';
 
 export class GameManagementService {
-  async getInitialGameData() {
-    const solution = await this.getRandomSolution();
-    return { solution };
+  async getInitialGameData(difficultyLevel: string) {
+    const solutionLength = getSolutionLength(difficultyLevel);
+    const solution = await this.getRandomSolution(solutionLength);
+    return { solution, solutionLength };
   }
 
   getFeedback(guess: string, solution: string) {
@@ -72,8 +74,8 @@ export class GameManagementService {
     return processedRawNumberSequence;
   }
 
-  async getRandomSolution() {
-    const rawRandomNumberSequence = await fetchRandomNumbers();
+  async getRandomSolution(solutionLength: number) {
+    const rawRandomNumberSequence = await fetchRandomNumbers(solutionLength);
     const processedSolution = this.parseRawNumberSequence(rawRandomNumberSequence);
     return processedSolution;
   }
