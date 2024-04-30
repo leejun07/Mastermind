@@ -10,7 +10,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/game', startRouter);
 
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  // Log it
   console.error(err);
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',

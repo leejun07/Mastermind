@@ -25,28 +25,45 @@ export class GameManagementService {
   checkGuess(guess: string, solution: string) {
     let exactMatch = 0;
     let match = 0;
-    const map: any = {};
+    const solutionMap: any = {};
     for (let char of solution) {
-      if (map[char]) {
-        map[char] += 1;
+      if (solutionMap[char]) {
+        solutionMap[char] += 1;
       } else {
-        map[char] = 1;
+        solutionMap[char] = 1;
       }
     }
-    for (let i = 0; i < solution.length; i++) {
-      if (guess[i] === solution[i]) {
-        exactMatch += 1;
-        match += 1;
-        map[guess[i]] -= 1;
+
+    const guessMap: any = {};
+    for (let char of guess) {
+      if (guessMap[char]) {
+        guessMap[char] += 1;
+      } else {
+        guessMap[char] = 1;
       }
     }
 
     for (let i = 0; i < solution.length; i++) {
-      if (solution.includes(guess[i]) && map[guess[i]] > 0) {
+      if (guess[i] === solution[i]) {
+        exactMatch += 1;
         match += 1;
-        map[guess[i]] -= 1;
+        solutionMap[guess[i]] -= 1;
+        guessMap[guess[i]] -= 1;
       }
     }
+
+    for (let i = 0; i < solution.length; i++) {
+      if (
+        solution.includes(guess[i]) &&
+        solutionMap[guess[i]] > 0 &&
+        solutionMap[guess[i]] <= guessMap[guess[i]]
+      ) {
+        match += 1;
+        solutionMap[guess[i]] -= 1;
+        guessMap[guess[i]] -= 1;
+      }
+    }
+
     return { exactMatch, match };
   }
 

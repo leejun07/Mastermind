@@ -8,4 +8,10 @@ export const validateGuess = (guess: string): void => {
       throw new Error('Guess must be all numbers');
     }
   }
+
+  for (let i = 0; i < guess.length; i++) {
+    if (Number(guess[i]) > 7) {
+      throw new Error('Guess must be only digits from 0 through 7');
+    }
+  }
 };

@@ -25,15 +25,15 @@ gameController.playGame = (req: Request, res: Response, next: NextFunction) => {
     validateGuess(guess);
     const feedback = gameManagementService.getFeedback(guess, solution);
     gameCache.updateGameCache(guess, feedback.response);
+
+    if (feedback.won === true || gameCache.currentGameCache.currentGuessCount === 0) {
+      gameCache.updateGameCacheUponCompletion(feedback);
+    }
     res.locals.gameData = {
       currentCache: gameCache.currentGameCache,
       currentGuess: guess,
       feedback,
     };
-
-    if (feedback.won === true || gameCache.currentGameCache.currentGuessCount === 0) {
-      gameCache.updateGameCacheUponCompletion(feedback);
-    }
     return next();
   } catch (error) {
     console.log(error);
