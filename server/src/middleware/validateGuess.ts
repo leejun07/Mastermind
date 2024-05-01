@@ -7,7 +7,7 @@ export const validateGuess = (req: Request, res: Response, next: NextFunction) =
 
   const validDigits = () => {
     for (let char of guess) {
-      if (char < 0 || char >= 7 || isNaN(char)) {
+      if (char < 0 || char > 7 || isNaN(char)) {
         return false;
       }
     }
