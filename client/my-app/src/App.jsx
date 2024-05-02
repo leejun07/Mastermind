@@ -1,7 +1,12 @@
 import { Game } from './Game';
 const App = () => {
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       <Game />
     </div>
   );

@@ -1,3 +1,4 @@
+import { GameLogicCache } from '../types/types';
 import { fetchRandomNumbers } from '../utils/fetchRandomNumbers';
 import { getSolutionLength } from '../utils/getSolutionLength';
 
@@ -8,26 +9,25 @@ export class GameManagementService {
     return { solution, solutionLength };
   }
 
-  getFeedback(guess: string, solution: string) {
+  getFeedback(guess: string, solution: string, currentGuessCount: number) {
     const feedback = {
       response: '',
       won: false,
     };
     const { exactMatch, match } = this.checkGuess(guess, solution);
 
+    feedback.response = `${match} correct number and ${exactMatch} correct location`;
     if (exactMatch === solution.length) {
-      feedback.response = 'Winner!!';
       feedback.won = true;
-    } else {
-      feedback.response = `${match} correct number and ${exactMatch} correct location”`;
     }
+
     return feedback;
   }
 
   checkGuess(guess: string, solution: string) {
     let exactMatch = 0;
     let match = 0;
-    const solutionMap: any = {};
+    const solutionMap: GameLogicCache = {};
     for (let char of solution) {
       if (solutionMap[char]) {
         solutionMap[char] += 1;
@@ -36,7 +36,7 @@ export class GameManagementService {
       }
     }
 
-    const guessMap: any = {};
+    const guessMap: GameLogicCache = {};
     for (let char of guess) {
       if (guessMap[char]) {
         guessMap[char] += 1;
@@ -65,7 +65,7 @@ export class GameManagementService {
     return { exactMatch, match };
   }
 
-  parseRawNumberSequence(rawRandomNumberSequence: any) {
+  parseRawNumberSequence(rawRandomNumberSequence: string) {
     const processedRawNumberSequence = rawRandomNumberSequence.split('\n').join('');
     return processedRawNumberSequence;
   }

@@ -6,3 +6,12 @@ export type GameCache = {
   feedbackHistory: string[];
   isGameOver: {};
 };
+
+export type GameLogicCache = {
+  [key: string]: number;
+};
+
+export type FeedBack = {
+  response: string;
+  won: boolean;
+};

@@ -10,22 +10,25 @@ const gameController: any = {};
 gameController.startGame = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { difficultyLevel } = req.body;
-    const { solution, solutionLength } = await gameManagementService.getInitialGameData(
-      difficultyLevel
-    );
+    const { solution } = await gameManagementService.getInitialGameData(difficultyLevel);
     const newGameCache = gameCache.initializeGameCache(solution, difficultyLevel);
     res.locals.gameCache = newGameCache;
     return next();
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
 };
 
 gameController.playGame = (req: Request, res: Response, next: NextFunction) => {
   const { guess } = req.body;
-  const { solution, difficultyLevel } = gameCache.currentGameCache;
+  const { solution } = gameCache.currentGameCache;
   try {
-    const feedback = gameManagementService.getFeedback(guess, solution);
+    const feedback = gameManagementService.getFeedback(
+      guess,
+      solution,
+      gameCache.currentGameCache.currentGuessCount
+    );
     gameCache.updateGameCache(guess, feedback.response);
 
     if (feedback.won === true || gameCache.currentGameCache.currentGuessCount === 0) {
@@ -37,8 +40,9 @@ gameController.playGame = (req: Request, res: Response, next: NextFunction) => {
       feedback,
     };
     return next();
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
 };
 

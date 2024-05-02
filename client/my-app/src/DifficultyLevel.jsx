@@ -10,29 +10,23 @@ export const DifficultyLevel = ({ onDifficultyLevelChange }) => {
 
   const handleButtonClick = async (difficultyLevel) => {
     onDifficultyLevelChange(difficultyLevel);
-    // Reset all button colors to default
     setButtonColors({
       Easy: '',
       Normal: '',
       Hard: '',
     });
-    // Set the clicked button color to green
     setButtonColors((prevColors) => ({
       ...prevColors,
       [difficultyLevel]: 'green',
     }));
 
     try {
-      // Send a POST request to the server with the difficulty level
       const response = await axios.post('http://localhost:8080/game/start', {
         difficultyLevel: difficultyLevel,
       });
-
-      console.log(response.data); // Log the response data for debugging
-      // Handle the response as needed
+      console.log(response.data);
     } catch (error) {
       console.error('Error sending difficulty level:', error);
-      // Handle the error as needed
     }
   };
 

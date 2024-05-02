@@ -7,10 +7,14 @@ export const Game = () => {
   const [difficultyLevel, setDifficultyLevel] = useState('');
   const [guessHistory, setGuessHistory] = useState([]);
   const [feedbackHistory, setFeedbackHistory] = useState([]);
-  const [userGuess, setUserGuess] = useState(''); // State to manage the user's guess
+  const [userGuess, setUserGuess] = useState('');
+  const [isGameOver, setIsGameOver] = useState(false);
 
   const handleDifficultyLevelChange = (level) => {
     setDifficultyLevel(level);
+    setGuessHistory([]);
+    setFeedbackHistory([]);
+    setIsGameOver(false);
   };
 
   const handlePlayGame = async (guess) => {
@@ -27,23 +31,28 @@ export const Game = () => {
 
     try {
       const response = await axios.post('http://localhost:8080/game/play', {
-        guess: guess,
-        difficultyLevel: difficultyLevel,
+        guess,
+        difficultyLevel,
       });
 
+      if (response.data.currentCache.isGameOver.status === true) {
+        alert(`${response.data.currentCache.isGameOver.message}`);
+        setIsGameOver(true);
+        return;
+      }
       setGuessHistory([...guessHistory, guess]);
       setFeedbackHistory([...feedbackHistory, response.data.feedback.response]);
-
-      console.log(response.data); // Log the response data for debugging
+      console.log(response.data);
     } catch (error) {
       console.error('Error playing the game:', error);
-      // Handle the error as needed
     }
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent the form from submitting normally
-    handlePlayGame(userGuess); // Call handlePlayGame with the user's guess
+    event.preventDefault();
+    if (!isGameOver) {
+      handlePlayGame(userGuess);
+    }
   };
 
   return (
@@ -54,11 +63,10 @@ export const Game = () => {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
+        width: '100vh',
         textAlign: 'center',
-        overflow: 'auto', // Enable scrolling
-        maxHeight: '100vh', // Ensure the container does not exceed the viewport height
-        border: '1px solid #000', // Optional: Add a border to visualize the box
-        padding: '20px', // Optional: Add some padding inside the box
+        maxHeight: '100vh',
+        padding: '20px',
       }}
     >
       <DifficultyLevel onDifficultyLevelChange={handleDifficultyLevelChange} />
@@ -73,16 +81,16 @@ export const Game = () => {
       </form>
       <div style={{ display: 'flex', gap: '20px' }}>
         <div>
-          <h3>Guess History:</h3>
-          <ul>
+          <h3>Guess History</h3>
+          <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
             {guessHistory.map((guess, index) => (
               <li key={index}>{guess}</li>
             ))}
           </ul>
         </div>
         <div>
-          <h3>Feedback History:</h3>
-          <ul>
+          <h3>Feedback History</h3>
+          <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
             {feedbackHistory.map((feedback, index) => (
               <li key={index}>{feedback}</li>
             ))}

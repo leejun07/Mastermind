@@ -7,5 +7,6 @@ export const fetchRandomNumbers = async (solutionLength: number) => {
     return processedResponse;
   } catch (error) {
     console.log(error);
+    return '';
   }
 };

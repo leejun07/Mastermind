@@ -1,5 +1,5 @@
 import { initialGameData } from '../configs/initialGameData';
-import { GameCache } from '../types/types';
+import { FeedBack, GameCache } from '../types/types';
 
 export class GameCacheService {
   currentGameCache: GameCache = initialGameData;
@@ -31,10 +31,10 @@ export class GameCacheService {
     return updatedGameCache;
   }
 
-  updateGameCacheUponCompletion(feedback: any) {
+  updateGameCacheUponCompletion(feedback: FeedBack) {
     this.currentGameCache.isGameOver = {
       status: true,
-      message: `${feedback.won ? 'You are a mastermind.' : 'You suck.'}`,
+      message: `${feedback.won ? 'You smart' : 'You stupid'}`,
     };
   }
 }
