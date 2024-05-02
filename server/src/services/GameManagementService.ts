@@ -55,11 +55,7 @@ export class GameManagementService {
     }
 
     for (let i = 0; i < solution.length; i++) {
-      if (
-        solution.includes(guess[i]) &&
-        solutionMap[guess[i]] > 0 &&
-        solutionMap[guess[i]] <= guessMap[guess[i]]
-      ) {
+      if (solutionMap[guess[i]] > 0 && guessMap[guess[i]] !== 0) {
         match += 1;
         solutionMap[guess[i]] -= 1;
         guessMap[guess[i]] -= 1;
