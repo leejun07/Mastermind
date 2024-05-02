@@ -9,7 +9,7 @@ export class GameManagementService {
     return { solution, solutionLength };
   }
 
-  getFeedback(guess: string, solution: string, currentGuessCount: number) {
+  getFeedback(guess: string, solution: string) {
     const feedback = {
       response: '',
       won: false,

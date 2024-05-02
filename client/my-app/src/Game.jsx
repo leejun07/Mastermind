@@ -34,14 +34,15 @@ export const Game = () => {
         guess,
         difficultyLevel,
       });
-
-      if (response.data.currentCache.isGameOver.status === true) {
-        alert(`${response.data.currentCache.isGameOver.message}`);
-        setIsGameOver(true);
-        return;
-      }
       setGuessHistory([...guessHistory, guess]);
       setFeedbackHistory([...feedbackHistory, response.data.feedback.response]);
+      if (response.data.currentCache.isGameOver.status === true) {
+        setTimeout(() => {
+          alert(`${response.data.currentCache.isGameOver.message}`);
+          setIsGameOver(true);
+        }, 750);
+        return;
+      }
       console.log(response.data);
     } catch (error) {
       console.error('Error playing the game:', error);
