@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export const DifficultyLevel = ({ onDifficultyLevelChange }) => {
+export const DifficultyLevel = ({ onDifficultyLevelChange, style }) => {
   const [buttonColors, setButtonColors] = useState({
     Easy: '',
     Normal: '',
@@ -31,7 +31,7 @@ export const DifficultyLevel = ({ onDifficultyLevelChange }) => {
   };
 
   return (
-    <div>
+    <div style={style}>
       <button
         style={{ backgroundColor: buttonColors.Easy }}
         onClick={() => handleButtonClick('Easy')}

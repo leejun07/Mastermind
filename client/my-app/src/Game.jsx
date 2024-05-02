@@ -69,7 +69,10 @@ export const Game = () => {
         padding: '20px',
       }}
     >
-      <DifficultyLevel onDifficultyLevelChange={handleDifficultyLevelChange} />
+      <DifficultyLevel
+        onDifficultyLevelChange={handleDifficultyLevelChange}
+        style={{ marginBottom: '20px' }}
+      />
       <form onSubmit={handleSubmit}>
         <input
           type="text"
