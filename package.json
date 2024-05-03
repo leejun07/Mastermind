@@ -1,0 +1,16 @@
+{
+  "name": "mastermind",
+  "version": "1.0.0",
+  "description": "MVP:",
+  "main": "index.js",
+  "scripts": {
+    "dev": "(cd client && npm run dev) & (cd server && npm run dev)",
+    "ts-coverage": "typescript-coverage-report"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.8",
+    "typescript-coverage-report": "^1.0.0"
+  }
+}
