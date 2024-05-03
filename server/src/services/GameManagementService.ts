@@ -77,5 +77,4 @@ export class GameManagementService {
   }
 }
 
-const gameManagementService = new GameManagementService();
-export default gameManagementService;
+export const gameManagementService = new GameManagementService();

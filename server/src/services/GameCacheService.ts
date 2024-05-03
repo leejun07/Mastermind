@@ -38,3 +38,5 @@ export class GameCacheService {
     };
   }
 }
+
+export const gameCache = new GameCacheService();
