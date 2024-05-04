@@ -29,6 +29,12 @@ export const Game = () => {
       return;
     }
 
+    for (let char of guess) {
+      if (Number(char) > 7 || Number(char) < 0) {
+        alert('Your guess must not include numbers greater than 7');
+      }
+    }
+
     try {
       const response = await axios.post('http://localhost:8080/game/play', {
         guess,

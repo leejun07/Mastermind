@@ -2,7 +2,8 @@ import request from 'supertest';
 import express, { NextFunction, Request, Response } from 'express';
 import gameController from '../../controllers/gameController';
 import { GameCacheService } from '../../services/GameCacheService';
-import gameManagementService, { GameManagementService } from '../../services/GameManagementService';
+import { gameManagementService } from '../../services/GameManagementService';
+import { difficultyLevels } from '../../configs/difficultySettings';
 
 jest.mock('../../services/GameCacheService');
 jest.mock('../../services/GameManagementService');
@@ -26,15 +27,15 @@ describe('Game Controller', () => {
     jest.clearAllMocks();
   });
 
-  it('should start a game successfully', async () => {
+  it('should start a game on Easy difficultyLevel successfully', async () => {
     const mockSolution = 'mocked-solution';
-    const mockSolutionLength = 3;
+    const mockSolutionLength = difficultyLevels['Easy'];
     mockedGameManagementService.getInitialGameData.mockResolvedValue({
       solution: mockSolution,
       solutionLength: mockSolutionLength,
     });
-    mockedGameCacheService.prototype.initializeGameCache.mockReturnValue({
-      difficultyLevel: 'Normal',
+    const mockedResponse = {
+      difficultyLevel: 'Easy',
       solution: '522',
       currentGuessCount: 10,
       guessHistory: [],
@@ -43,7 +44,8 @@ describe('Game Controller', () => {
         status: false,
         message: '',
       },
-    });
+    };
+    mockedGameCacheService.prototype.initializeGameCache.mockReturnValue(mockedResponse);
 
     const response = await request(app)
       .post('/start')
@@ -55,9 +57,19 @@ describe('Game Controller', () => {
       mockSolution,
       'Easy'
     );
-    expect(response.body).toEqual({
+    expect(response.body).toEqual(mockedResponse);
+  });
+
+  it('should start a game on Normal difficultyLevel successfully', async () => {
+    const mockSolution = 'mocked-solution';
+    const mockSolutionLength = difficultyLevels['Normal'];
+    mockedGameManagementService.getInitialGameData.mockResolvedValue({
+      solution: mockSolution,
+      solutionLength: mockSolutionLength,
+    });
+    const mockedResponse = {
       difficultyLevel: 'Normal',
-      solution: '522',
+      solution: '5222',
       currentGuessCount: 10,
       guessHistory: [],
       feedbackHistory: [],
@@ -65,6 +77,52 @@ describe('Game Controller', () => {
         status: false,
         message: '',
       },
+    };
+    mockedGameCacheService.prototype.initializeGameCache.mockReturnValue(mockedResponse);
+
+    const response = await request(app)
+      .post('/start')
+      .send({ difficultyLevel: 'Normal' })
+      .expect(200);
+
+    expect(mockedGameManagementService.getInitialGameData).toHaveBeenCalledWith('Normal');
+    expect(mockedGameCacheService.prototype.initializeGameCache).toHaveBeenCalledWith(
+      mockSolution,
+      'Normal'
+    );
+    expect(response.body).toEqual(mockedResponse);
+  });
+
+  it('should start a game on Hard difficultyLevel successfully', async () => {
+    const mockSolution = 'mocked-solution';
+    const mockSolutionLength = difficultyLevels['Hard'];
+    mockedGameManagementService.getInitialGameData.mockResolvedValue({
+      solution: mockSolution,
+      solutionLength: mockSolutionLength,
     });
+    const mockedResponse = {
+      difficultyLevel: 'Hard',
+      solution: '52244',
+      currentGuessCount: 10,
+      guessHistory: [],
+      feedbackHistory: [],
+      isGameOver: {
+        status: false,
+        message: '',
+      },
+    };
+    mockedGameCacheService.prototype.initializeGameCache.mockReturnValue(mockedResponse);
+
+    const response = await request(app)
+      .post('/start')
+      .send({ difficultyLevel: 'Hard' })
+      .expect(200);
+
+    expect(mockedGameManagementService.getInitialGameData).toHaveBeenCalledWith('Hard');
+    expect(mockedGameCacheService.prototype.initializeGameCache).toHaveBeenCalledWith(
+      mockSolution,
+      'Hard'
+    );
+    expect(response.body).toEqual(mockedResponse);
   });
 });

@@ -1,5 +1,5 @@
 import bodyParser from 'body-parser';
-import startRouter from './routes/start';
+import gameRouter from './routes/gameRoutes';
 import express from 'express';
 import cors from 'cors';
 
@@ -9,14 +9,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use('/game', startRouter);
+app.use('/game', gameRouter);
 
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error(err);
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
-    message: { err: 'An error occurred' },
+    message: { error: err.message },
   };
   const errorObj = Object.assign({}, defaultErr, err);
   console.log(errorObj.log);
