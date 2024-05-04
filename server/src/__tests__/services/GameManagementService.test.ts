@@ -1,4 +1,3 @@
-import { difficultyLevels } from '../../configs/difficultySettings';
 import { gameManagementService } from '../../services/GameManagementService';
 
 const testInitialGameData = async (difficultyLevel: string, solutionLength: number) => {

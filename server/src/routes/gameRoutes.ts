@@ -1,7 +1,5 @@
-import express, { Router } from 'express';
+import express from 'express';
 import gameController from '../controllers/gameController';
-import { validateGuess } from '../middleware/validateGuess';
-import { validateStartRequest } from '../middleware/validateStartRequest';
 
 const router = express.Router();
 

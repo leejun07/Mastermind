@@ -2,7 +2,7 @@ import { GameLogicCache } from '../types/types';
 import { fetchRandomNumbers } from '../utils/fetchRandomNumbers';
 import { getSolutionLength } from '../utils/getSolutionLength';
 
-class GameManagementService {
+export class GameManagementService {
   async getInitialGameData(difficultyLevel: string) {
     const solutionLength = getSolutionLength(difficultyLevel);
     const solution = await this.getRandomSolution(solutionLength);

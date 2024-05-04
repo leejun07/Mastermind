@@ -12,7 +12,7 @@ class ValidationService {
       });
     }
   }
-  validateGuess(guess: string, difficultyLevel: string, res: Response, next: NextFunction) {
+  validateGuess(guess: string, difficultyLevel: string, currentGuessCount: number, res: Response) {
     const validDigits = () => {
       for (let char of guess) {
         if (Number(char) < 0 || Number(char) > 7 || isNaN(Number(char))) {
@@ -24,9 +24,15 @@ class ValidationService {
 
     const validLength = guess.length === difficultyLevels[difficultyLevel];
 
-    if (validDigits() && validLength) {
-      return next();
-    } else {
+    if (currentGuessCount < 1) {
+      return res.status(400).json({
+        log: 'User out of guesses',
+        status: 400,
+        message: { err: 'User out of guesses' },
+      });
+    }
+
+    if (!validDigits() || !validLength) {
       return res.status(400).json({
         log: 'Invalid submitted guess',
         status: 400,

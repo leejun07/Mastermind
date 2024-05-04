@@ -1,7 +1,7 @@
 import request from 'supertest';
 import express, { NextFunction, Request, Response } from 'express';
 import gameController from '../../controllers/gameController';
-import { GameCacheService } from '../../services/GameCacheService';
+import { gameCache, GameCacheService } from '../../services/GameCacheService';
 import { gameManagementService } from '../../services/GameManagementService';
 import { difficultyLevels } from '../../configs/difficultySettings';
 

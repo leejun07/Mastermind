@@ -21,8 +21,9 @@ const gameController = {
   playGame: (req: Request, res: Response, next: NextFunction) => {
     const { guess, difficultyLevel } = req.body;
     const { solution } = gameCache.currentGameCache;
-    validationService.validateGuess(guess, difficultyLevel, res, next);
+    const currentGuessCount = gameCache.currentGameCache.currentGuessCount;
     try {
+      validationService.validateGuess(guess, difficultyLevel, currentGuessCount, res);
       const feedback = gameManagementService.getFeedback(guess, solution);
       gameCache.updateGameCache(guess, feedback.response);
 
