@@ -59,6 +59,7 @@ export const Game = () => {
     event.preventDefault();
     if (!isGameOver) {
       handlePlayGame(userGuess);
+      setUserGuess('');
     }
   };
 
