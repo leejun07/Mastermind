@@ -1,7 +1,7 @@
 import { initialGameData } from '../configs/initialGameData';
 import { FeedBack, GameCache } from '../types/types';
 
-export class GameCacheService {
+class GameCacheService {
   currentGameCache: GameCache = initialGameData;
 
   initializeGameCache(solution: string, difficultyLevel: string): GameCache {

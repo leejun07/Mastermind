@@ -5,11 +5,11 @@ import { validateStartRequest } from '../middleware/validateStartRequest';
 
 const router = express.Router();
 
-router.post('/start', validateStartRequest, gameController.startGame, (req, res) => {
+router.post('/start', gameController.startGame, (req, res) => {
   res.status(200).send(res.locals.gameCache);
 });
 
-router.post('/play', validateGuess, gameController.playGame, (req, res) => {
+router.post('/play', gameController.playGame, (req, res) => {
   res.status(200).send(res.locals.gameData);
 });
 

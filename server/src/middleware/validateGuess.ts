@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { difficultyLevels } from '../configs/difficultySettings';
-import { GameCacheService } from '../services/GameCacheService';
 
 export const validateGuess = (req: Request, res: Response, next: NextFunction) => {
   const { guess, difficultyLevel } = req.body;

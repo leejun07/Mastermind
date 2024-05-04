@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { gameCache } from '../services/GameCacheService';
 import { gameManagementService } from '../services/GameManagementService';
+import { validationService } from '../services/ValidationService';
 
 const gameController = {
   startGame: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { difficultyLevel } = req.body;
+      validationService.validateStartRequest(difficultyLevel, res);
       const { solution } = await gameManagementService.getInitialGameData(difficultyLevel);
       const newGameCache = gameCache.initializeGameCache(solution, difficultyLevel);
       res.locals.gameCache = newGameCache;
@@ -17,8 +19,9 @@ const gameController = {
   },
 
   playGame: (req: Request, res: Response, next: NextFunction) => {
-    const { guess } = req.body;
+    const { guess, difficultyLevel } = req.body;
     const { solution } = gameCache.currentGameCache;
+    validationService.validateGuess(guess, difficultyLevel, res, next);
     try {
       const feedback = gameManagementService.getFeedback(guess, solution);
       gameCache.updateGameCache(guess, feedback.response);
