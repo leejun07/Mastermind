@@ -21,13 +21,20 @@ const gameController = {
   playGame: (req: Request, res: Response, next: NextFunction) => {
     const { guess, difficultyLevel } = req.body;
     const { solution } = gameCache.currentGameCache;
-    const currentGuessCount = gameCache.currentGameCache.currentGuessCount;
+    const isGameOver = gameCache.currentGameCache.isGameOver.status;
     try {
-      validationService.validateGuess(guess, difficultyLevel, currentGuessCount, res);
+      const validationResponse = validationService.validateGuess(
+        guess,
+        difficultyLevel,
+        isGameOver,
+        res
+      );
+      if (validationResponse) return next(validationResponse);
       const feedback = gameManagementService.getFeedback(guess, solution);
       gameCache.updateGameCache(guess, feedback.response);
+      const currentGuessCount = gameCache.currentGameCache.currentGuessCount;
 
-      if (feedback.won === true || gameCache.currentGameCache.currentGuessCount === 0) {
+      if (feedback.won === true || currentGuessCount === 0) {
         gameCache.updateGameCacheUponCompletion(feedback);
       }
       res.locals.gameData = {

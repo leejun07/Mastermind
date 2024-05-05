@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { DifficultyLevel } from './DifficultyLevel';
 import axios from 'axios';
-import { difficultySettings } from './difficultySettings';
 
 export const Game = () => {
   const [difficultyLevel, setDifficultyLevel] = useState('');
@@ -23,18 +22,6 @@ export const Game = () => {
       return;
     }
 
-    const expectedLength = difficultySettings[difficultyLevel];
-    if (guess.length !== expectedLength) {
-      alert(`Your guess must be ${expectedLength} characters long.`);
-      return;
-    }
-
-    for (let char of guess) {
-      if (Number(char) > 7 || Number(char) < 0) {
-        alert('Your guess must not include numbers greater than 7');
-      }
-    }
-
     try {
       const response = await axios.post('http://localhost:8080/game/play', {
         guess,
@@ -49,9 +36,18 @@ export const Game = () => {
         }, 750);
         return;
       }
+      if (response.data.currentCache.isGameOver.status === true) {
+        setTimeout(() => {
+          alert(`${response.data.currentCache.isGameOver.message}`);
+          setIsGameOver(true);
+        }, 750);
+        return;
+      }
+
       console.log(response.data);
     } catch (error) {
       console.error('Error playing the game:', error);
+      alert(`${error.response.data.log}`);
     }
   };
 

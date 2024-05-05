@@ -4,7 +4,10 @@ export type GameCache = {
   solution: string;
   difficultyLevel: string;
   feedbackHistory: string[];
-  isGameOver: {};
+  isGameOver: {
+    status: boolean;
+    message: string;
+  };
 };
 
 export type GameLogicCache = {
