@@ -35,9 +35,9 @@ describe('ValidationService', () => {
       validationService.validateGuess('123', 'Easy', true, res);
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({
-        log: 'Game is over. Please start a new game by selecting difficulty level',
+        log: 'Game is over. Please start a new game by selecting difficulty level.',
         status: 400,
-        message: { err: 'Game is over. Please start a new game by selecting difficulty level' },
+        message: { err: 'Game is over. Please start a new game by selecting difficulty level.' },
       });
     });
     it('should not return a response if game is not over', () => {
@@ -67,15 +67,29 @@ describe('ValidationService', () => {
       validationService.validateGuess('12892', 'Hard', false, res);
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({
-        log: 'Your guess must not include numbers greater than 7',
+        log: 'Your guess should be within the range of 0 to 7, inclusive, and must consist only of numerical values.',
         status: 400,
-        message: { err: 'Your guess must not include numbers greater than 7' },
+        message: {
+          err: 'Your guess should be within the range of 0 to 7, inclusive, and must consist only of numerical values.',
+        },
       });
     });
     it('should not return a response if user input does not contain any numbers greater than 7', () => {
       const res = mockResponse();
       validationService.validateGuess('12451', 'Hard', false, res);
       expect(res.json).not.toHaveBeenCalled();
+    });
+    it('should return 400 if user input contains any non-numerical values', () => {
+      const res = mockResponse();
+      validationService.validateGuess('1pas!', 'Hard', false, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        log: 'Your guess should be within the range of 0 to 7, inclusive, and must consist only of numerical values.',
+        status: 400,
+        message: {
+          err: 'Your guess should be within the range of 0 to 7, inclusive, and must consist only of numerical values.',
+        },
+      });
     });
   });
 });

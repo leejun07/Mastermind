@@ -41,9 +41,9 @@ export class ValidationService {
     // Check if the game is over
     if (isGameOver) {
       return res.status(400).json({
-        log: 'Game is over. Please start a new game by selecting difficulty level',
+        log: 'Game is over. Please start a new game by selecting difficulty level.',
         status: 400,
-        message: { err: 'Game is over. Please start a new game by selecting difficulty level' },
+        message: { err: 'Game is over. Please start a new game by selecting difficulty level.' },
       });
     }
 
@@ -61,9 +61,11 @@ export class ValidationService {
     // Check if user input contains any numbers greater than 7
     if (!validDigits()) {
       return res.status(400).json({
-        log: 'Your guess must not include numbers greater than 7',
+        log: 'Your guess should be within the range of 0 to 7, inclusive, and must consist only of numerical values.',
         status: 400,
-        message: { err: 'Your guess must not include numbers greater than 7' },
+        message: {
+          err: 'Your guess should be within the range of 0 to 7, inclusive, and must consist only of numerical values.',
+        },
       });
     }
   }
