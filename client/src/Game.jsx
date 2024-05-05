@@ -35,7 +35,7 @@ export const Game = () => {
         setTimeout(() => {
           alert(`${response.data.currentCache.isGameOver.message}`);
           setIsGameOver(true);
-        }, 500);
+        }, 300);
         return;
       }
       setGuessCount(response.data.currentCache.currentGuessCount);
@@ -83,7 +83,9 @@ export const Game = () => {
         />
         <button type="submit">Submit Guess</button>
       </form>
-      {difficultyLevel && <div>{guessCount} guesses left</div>}
+      {difficultyLevel && (
+        <div>{guessCount === 1 ? `${guessCount} guess left` : `${guessCount} guesses left`}</div>
+      )}
       {difficultyLevel && guessHistory.length > 0 && (
         <div style={{ display: 'flex', gap: '20px' }}>
           <div>
