@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { validationService } from '../../services/ValidationService';
+import { validationService } from '../../services/validationService';
 
 const mockResponse = () => {
   const res = {} as Response;
@@ -30,32 +30,51 @@ describe('ValidationService', () => {
   });
 
   describe('validateGuess', () => {
-    it('should return 400 if user is out of guesses', () => {
+    it('should return 400 if game is over', () => {
       const res = mockResponse();
-      validationService.validateGuess('1234', 'Easy', 0, res);
+      validationService.validateGuess('123', 'Easy', true, res);
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({
-        log: 'User out of guesses',
+        log: 'Game is over. Please start a new game by selecting difficulty level',
         status: 400,
-        message: { err: 'User out of guesses' },
+        message: { err: 'Game is over. Please start a new game by selecting difficulty level' },
       });
     });
-
-    it('returns 400 status and error message for user out of guesses', () => {
+    it('should not return a response if game is not over', () => {
       const res = mockResponse();
-      validationService.validateGuess('12345', 'Easy', 1, res);
+      validationService.validateGuess('123', 'Easy', false, res);
+      expect(res.json).not.toHaveBeenCalled();
+    });
+    it('should return 400 if invalid user input length', () => {
+      const res = mockResponse();
+      validationService.validateGuess('1234', 'Easy', false, res);
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({
-        log: 'Invalid submitted guess',
+        log: `Your guess must be 3 characters long.`,
         status: 400,
-        message: { err: 'Invalid submitted guess' },
+        message: {
+          err: `Your guess must be 3 characters long.`,
+        },
       });
     });
-
-    it('should not return a response if guess is valid', () => {
+    it('should not return a response if valid user input length', () => {
       const res = mockResponse();
-      validationService.validateGuess('123', 'Easy', 1, res);
-      expect(res.status).not.toHaveBeenCalled();
+      validationService.validateGuess('123', 'Easy', false, res);
+      expect(res.json).not.toHaveBeenCalled();
+    });
+    it('should return 400 if user input contains any numbers greater than 7', () => {
+      const res = mockResponse();
+      validationService.validateGuess('12892', 'Hard', false, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        log: 'Your guess must not include numbers greater than 7',
+        status: 400,
+        message: { err: 'Your guess must not include numbers greater than 7' },
+      });
+    });
+    it('should not return a response if user input does not contain any numbers greater than 7', () => {
+      const res = mockResponse();
+      validationService.validateGuess('12451', 'Hard', false, res);
       expect(res.json).not.toHaveBeenCalled();
     });
   });

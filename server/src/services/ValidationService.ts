@@ -4,7 +4,7 @@ import { difficultyLevels } from '../configs/difficultySettings';
 /**
  * Service for validating game inputs.
  */
-class ValidationService {
+export class ValidationService {
   /**
    * Validates the start request for a new game.
    * Inputs: difficultyLevel - The selected difficulty level and res - Express response object.

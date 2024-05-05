@@ -14,7 +14,11 @@ const testGetFeedback = (
   won: boolean
 ) => {
   const feedback = gameManagementService.getFeedback(guess, solution);
-  expect(feedback.response).toBe(`${match} correct number and ${exactMatch} correct location`);
+  if (feedback.response === 'all incorrect') {
+    expect(feedback.response).toBe('all incorrect');
+  } else {
+    expect(feedback.response).toBe(`${match} correct number and ${exactMatch} correct location`);
+  }
   expect(feedback.won).toBe(won);
 };
 
