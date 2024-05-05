@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express';
+import { Response } from 'express';
 import { difficultyLevels } from '../configs/difficultySettings';
 
 class ValidationService {
