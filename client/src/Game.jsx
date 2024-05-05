@@ -69,6 +69,7 @@ export const Game = () => {
         padding: '20px',
       }}
     >
+      <h2>Mastermind</h2>
       <DifficultyLevel
         onDifficultyLevelChange={handleDifficultyLevelChange}
         style={{ marginBottom: '20px' }}
@@ -83,24 +84,26 @@ export const Game = () => {
         <button type="submit">Submit Guess</button>
       </form>
       {difficultyLevel && <div>{guessCount} guesses left</div>}
-      <div style={{ display: 'flex', gap: '20px' }}>
-        <div>
-          <h3>Guess History</h3>
-          <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
-            {guessHistory.map((guess, index) => (
-              <li key={index}>{guess}</li>
-            ))}
-          </ul>
+      {difficultyLevel && guessHistory.length > 0 && (
+        <div style={{ display: 'flex', gap: '20px' }}>
+          <div>
+            <h4>Guess History</h4>
+            <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+              {guessHistory.map((guess, index) => (
+                <li key={index}>{guess}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4>Feedback History</h4>
+            <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+              {feedbackHistory.map((feedback, index) => (
+                <li key={index}>{feedback}</li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <div>
-          <h3>Feedback History</h3>
-          <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
-            {feedbackHistory.map((feedback, index) => (
-              <li key={index}>{feedback}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
