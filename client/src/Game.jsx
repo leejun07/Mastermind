@@ -8,6 +8,7 @@ export const Game = () => {
   const [feedbackHistory, setFeedbackHistory] = useState([]);
   const [userGuess, setUserGuess] = useState('');
   const [isGameOver, setIsGameOver] = useState(false);
+  const [guessCount, setGuessCount] = useState(10);
 
   const handleDifficultyLevelChange = (level) => {
     setDifficultyLevel(level);
@@ -30,19 +31,14 @@ export const Game = () => {
       setGuessHistory([...guessHistory, guess]);
       setFeedbackHistory([...feedbackHistory, response.data.feedback.response]);
       if (response.data.currentCache.isGameOver.status === true) {
+        setGuessCount(0);
         setTimeout(() => {
           alert(`${response.data.currentCache.isGameOver.message}`);
           setIsGameOver(true);
-        }, 750);
+        }, 500);
         return;
       }
-      if (response.data.currentCache.isGameOver.status === true) {
-        setTimeout(() => {
-          alert(`${response.data.currentCache.isGameOver.message}`);
-          setIsGameOver(true);
-        }, 750);
-        return;
-      }
+      setGuessCount(response.data.currentCache.currentGuessCount);
 
       console.log(response.data);
     } catch (error) {
@@ -77,7 +73,7 @@ export const Game = () => {
         onDifficultyLevelChange={handleDifficultyLevelChange}
         style={{ marginBottom: '20px' }}
       />
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
         <input
           type="text"
           value={userGuess}
@@ -86,6 +82,7 @@ export const Game = () => {
         />
         <button type="submit">Submit Guess</button>
       </form>
+      <div>{guessCount} guesses left</div>
       <div style={{ display: 'flex', gap: '20px' }}>
         <div>
           <h3>Guess History</h3>
