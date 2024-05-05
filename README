@@ -1,1 +1,83 @@
-Please go into root directory of this file and run "npm run dev"
+# Mastermind
+
+Welcome to Mastermind, a game to test your pattern recognition, logical thinking, and problem solving abilities.
+
+# Overview
+
+- The computer selects a random pattern of three (easy), four (normal), or five (hard) different numbers from 0 to 7.
+- The player has 10 attempts to guess the combinations.
+- The feedback provided by the computer after each guess.
+- Winning condition: Guessing the right combination within 10 attempts.
+
+# Example Run
+
+1. The player selects "Easy" difficulty level.
+2. The computer will choose a random solution of length three. In this case "223"
+3. The player will guess "124"
+4. The computer will return a feedback of "1 correct number and 1 correct location"
+5. The player will guess "135"
+6. The computer will return a feedback of "2 correct number and 1 correct location"
+7. The player will continue to guess a string of numbers within the range of 0 - 7 and of length 3 until they run out of guesses or win.
+
+# Setup Instructions
+
+1. Install Node.js on your machine. Please follow instructions here: https://nodejs.org/en/download.
+2. Clone the repository to your local machine.
+   - `git clone https://github.com/leejun07/Mastermind.git`
+3. Install dependencies
+   - Navigate to the root directory of the application
+     - `cd Mastermind`
+   - Client
+     - `cd client`
+     - `npm install`
+   - Server
+     - `cd ../server`
+     - `npm install`
+4. Run client and server
+   - Navigate to root directory of the application
+     - `npm run dev`
+5. Testing
+   - Currently server is only tested.
+   - Run server tests by:
+     - `cd server`
+     - `npm run tests`
+
+# Playing the game
+
+- Open your browser go to [http://localhost:3000] to start playing Mastermind.
+- Select a difficulty level: Easy, Normal, or Hard
+- Input a set of numbers according to difficulty level
+  **All digits must be within the range of 0 - 7**
+  - Easy: Length of 3
+  - Normal: Length of 4
+  - Hard: Length of 5
+
+# Technologies
+
+- Mastermind is built in **TypeScript**
+- Frontend is built in **React**
+- The backend runs in a **Node** environment and built in **Express**, following MVC architecture.
+  - Tested with **Jest** and **Supertest**.
+
+# Server Code Structure
+
+Server handles all game logic:
+
+- Dynamically fetching a random sequence from the random.org API, based on user-selected difficulty level.
+- Initializing a game with necessary data depending on user-selected difficulty level.
+- Algorithmically comparing a user-provided guess against the generated solution.
+- Dynamically generating feedback to send back to the user.
+- Judging winning or losing conditions and sending the client corresponding data.
+
+Services, controllers, routes,
+
+- Routes
+  - `gameRoutes.ts`
+    - `/start` handles logic to start the game
+    - `/play` handles logic to play the game
+- Controllers
+  - `gameController.ts` handles starting the game depending on user input and the processing of player guesses
+- Services
+  - `ValidationService.ts` handles validating the start request and user input. Will short circuit the request if invalid.
+  - `GameCacheService.ts`
+  - `GameManagementService.ts`

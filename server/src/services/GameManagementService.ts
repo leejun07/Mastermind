@@ -16,7 +16,11 @@ export class GameManagementService {
     };
     const { exactMatch, match } = this.checkGuess(guess, solution);
 
-    feedback.response = `${match} correct number and ${exactMatch} correct location`;
+    if (exactMatch === 0 && match === 0) {
+      feedback.response = 'all incorrect';
+    } else {
+      feedback.response = `${match} correct number and ${exactMatch} correct location`;
+    }
     if (exactMatch === solution.length) {
       feedback.won = true;
     }

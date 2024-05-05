@@ -34,7 +34,7 @@ export class GameCacheService {
   updateGameCacheUponCompletion(feedback: FeedBack) {
     this.currentGameCache.isGameOver = {
       status: true,
-      message: `${feedback.won ? 'You smart' : 'You stupid'}`,
+      message: `${feedback.won ? 'WINNER (:' : 'Next time :/'}`,
     };
   }
 }

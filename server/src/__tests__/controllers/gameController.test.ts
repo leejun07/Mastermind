@@ -1,8 +1,8 @@
 import request from 'supertest';
 import express, { NextFunction, Request, Response } from 'express';
 import gameController from '../../controllers/gameController';
-import { gameCache, GameCacheService } from '../../services/GameCacheService';
-import { gameManagementService } from '../../services/GameManagementService';
+import { gameCache, GameCacheService } from '../../services/gameCacheService';
+import { gameManagementService } from '../../services/gameManagementService';
 import { difficultyLevels } from '../../configs/difficultySettings';
 
 jest.mock('../../services/GameCacheService');

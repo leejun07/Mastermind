@@ -1,4 +1,4 @@
-import { gameManagementService } from '../../services/GameManagementService';
+import { gameManagementService } from '../../services/gameManagementService';
 
 const testInitialGameData = async (difficultyLevel: string, solutionLength: number) => {
   const initialGameData = await gameManagementService.getInitialGameData(difficultyLevel);

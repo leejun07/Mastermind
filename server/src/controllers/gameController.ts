@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { gameCache } from '../services/GameCacheService';
-import { gameManagementService } from '../services/GameManagementService';
-import { validationService } from '../services/ValidationService';
+import { gameCache } from '../services/gameCacheService';
+import { gameManagementService } from '../services/gameManagementService';
+import { validationService } from '../services/validationService';
 
 const gameController = {
   startGame: async (req: Request, res: Response, next: NextFunction) => {

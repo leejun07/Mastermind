@@ -5,11 +5,7 @@ class ValidationService {
   validateStartRequest(difficultyLevel: string, res: Response) {
     const difficultyLevels = ['Easy', 'Normal', 'Hard'];
     if (!difficultyLevel || !difficultyLevels.includes(difficultyLevel)) {
-      return res.status(400).json({
-        log: 'Invalid difficulty level',
-        status: 400,
-        message: { err: 'Invalid difficulty level' },
-      });
+      throw new Error('Invalid difficulty level');
     }
   }
   validateGuess(guess: string, difficultyLevel: string, currentGuessCount: number, res: Response) {
@@ -25,19 +21,11 @@ class ValidationService {
     const validLength = guess.length === difficultyLevels[difficultyLevel];
 
     if (currentGuessCount < 1) {
-      return res.status(400).json({
-        log: 'User out of guesses',
-        status: 400,
-        message: { err: 'User out of guesses' },
-      });
+      throw new Error('User is out of guess');
     }
 
     if (!validDigits() || !validLength) {
-      return res.status(400).json({
-        log: 'Invalid submitted guess',
-        status: 400,
-        message: { err: 'Invalid submitted guess' },
-      });
+      throw new Error('Invalid submitted guess');
     }
   }
 }
