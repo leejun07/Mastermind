@@ -1,7 +1,15 @@
 import { Response } from 'express';
 import { difficultyLevels } from '../configs/difficultySettings';
 
+/**
+ * Service for validating game inputs.
+ */
 class ValidationService {
+  /**
+   * Validates the start request for a new game.
+   * Inputs: difficultyLevel - The selected difficulty level and res - Express response object.
+   * Output: JSON response if validation fails, undefined otherwise.
+   */
   validateStartRequest(difficultyLevel: string, res: Response) {
     const difficultyLevels = ['Easy', 'Normal', 'Hard'];
     if (!difficultyLevel || !difficultyLevels.includes(difficultyLevel)) {
@@ -12,6 +20,12 @@ class ValidationService {
       });
     }
   }
+
+  /**
+   * Validates a user's guess during gameplay.
+   * Inputs: guess, difficultyLevel, isGameOver, res
+   * Output: JSON response if validation fails, undefined otherwise.
+   */
   validateGuess(guess: string, difficultyLevel: string, isGameOver: boolean, res: Response) {
     const validDigits = () => {
       for (let char of guess) {
@@ -24,6 +38,7 @@ class ValidationService {
 
     const validLength = guess.length === difficultyLevels[difficultyLevel];
 
+    // Check if the game is over
     if (isGameOver) {
       return res.status(400).json({
         log: 'Game is over. Please start a new game by selecting difficulty level',
@@ -32,6 +47,7 @@ class ValidationService {
       });
     }
 
+    // Check if the user input is of valid length
     if (!validLength) {
       return res.status(400).json({
         log: `Your guess must be ${difficultyLevels[difficultyLevel]} characters long.`,
@@ -41,6 +57,8 @@ class ValidationService {
         },
       });
     }
+
+    // Check if user input contains any numbers greater than 7
     if (!validDigits()) {
       return res.status(400).json({
         log: 'Your guess must not include numbers greater than 7',
