@@ -82,7 +82,7 @@ export const Game = () => {
         />
         <button type="submit">Submit Guess</button>
       </form>
-      <div>{guessCount} guesses left</div>
+      {difficultyLevel && <div>{guessCount} guesses left</div>}
       <div style={{ display: 'flex', gap: '20px' }}>
         <div>
           <h3>Guess History</h3>
