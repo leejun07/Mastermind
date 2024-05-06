@@ -27,15 +27,17 @@ Welcome to Mastermind, a game to test your pattern recognition, logical thinking
 3. Install dependencies
    - Navigate to the root directory of the application
      - `cd Mastermind`
-   - Client
+     - `npm install`
+   - Navigate to the Client directory
      - `cd client`
      - `npm install`
-   - Server
+   - Navigate to the Server directory
      - `cd ../server`
      - `npm install`
 4. Run client and server
    - Navigate to root directory of the application
-     - `npm run dev`
+   - `cd ..`
+   - `npm run dev`
 5. Testing
    - Currently server is only tested.
    - Run server tests by:
