@@ -4,13 +4,14 @@
   "description": "MVP:",
   "main": "index.js",
   "scripts": {
-    "dev": "(cd client && npm start) & (cd server && npm start)",
+    "dev": "concurrently \"npm start --prefix client\" \"npm start --prefix server\"",
     "ts-coverage": "typescript-coverage-report"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.12.8",
+    "concurrently": "^8.2.2",
     "typescript-coverage-report": "^1.0.0"
   }
 }
