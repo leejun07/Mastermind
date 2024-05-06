@@ -74,15 +74,17 @@ export const Game = () => {
         onDifficultyLevelChange={handleDifficultyLevelChange}
         style={{ marginBottom: '20px' }}
       />
-      <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
-        <input
-          type="text"
-          value={userGuess}
-          onChange={(e) => setUserGuess(e.target.value)}
-          placeholder="Enter your guess"
-        />
-        <button type="submit">Submit Guess</button>
-      </form>
+      {difficultyLevel && (
+        <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
+          <input
+            type="text"
+            value={userGuess}
+            onChange={(e) => setUserGuess(e.target.value)}
+            placeholder="Enter your guess"
+          />
+          <button type="submit">Submit Guess</button>
+        </form>
+      )}
       {difficultyLevel && (
         <div>{guessCount === 1 ? `${guessCount} guess left` : `${guessCount} guesses left`}</div>
       )}
