@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { gameCache } from '../services/gameCacheService';
+import { GameCacheService } from '../services/gameCacheService';
 import { gameManagementService } from '../services/gameManagementService';
 import { validationService } from '../services/validationService';
 
+const gameCache = new GameCacheService();
 /**
  * Controller for handling Mastermind game operations.
  */
