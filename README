@@ -42,7 +42,7 @@ Welcome to Mastermind, a game to test your pattern recognition, logical thinking
    - Currently server is only tested.
    - Run server tests by:
      - `cd server`
-     - `npm run tests`
+     - `npm run test`
 
 ## Playing the game
 
