@@ -83,6 +83,7 @@ export class GameManagementService {
 
     // Check for matches (correct digits but not in the correct position)
     for (let i = 0; i < solution.length; i++) {
+      // Checks if current element of guess is part of the solution and that the current element has not been completely matched yet
       if (solutionMap[guess[i]] > 0 && guessMap[guess[i]] !== 0) {
         match += 1;
         solutionMap[guess[i]] -= 1;
