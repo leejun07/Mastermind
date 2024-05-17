@@ -99,3 +99,4 @@ The algorithm developed compares a guess with a solution to determine the number
 - Allow user to host a db to store their scores.
 - Set a timer according to difficulty level.
 - Chatting between users
+- UI improvements
